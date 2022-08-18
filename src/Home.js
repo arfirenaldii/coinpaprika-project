@@ -5,9 +5,14 @@ import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Pagination from 'react-bootstrap/Pagination';
+import Container from 'react-bootstrap/Container';
 
-import Container from './components/Container';
 import styled from 'styled-components';
+
+const Background = styled.div`
+  background-color: #F3F7FB;
+  height: 100vh;
+`
 
 const StyledTable = styled(Table)`
   &>tbody {
@@ -28,7 +33,7 @@ const StyledCard = styled(Card)`
 const TitleSmall = styled.div`
   font-size: 12px;
   color: #ACBCCF;
-  margin: 14px 0px;
+  padding: 14px 0px;
 `
 
 const Title = styled.div`
@@ -98,66 +103,68 @@ function Home() {
   }, [])
 
   return (
-    <Container>
-      <TitleSmall>Coin List</TitleSmall>
-      <StyledCard>
-        <Title>Coin List</Title>
-        <Stack direction="horizontal" gap={2} style={{ margin: '38px 0px' }}>
-          <Select />
-          <Search />
-        </Stack>
-        {loading ?
-          <div>loading...</div>
-          :
-          <div>
-            <StyledTable>
-              <thead className='text-white' style={{ backgroundColor: '#3783C6' }}>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Symbol</th>
-                  <th>rank</th>
-                  <th>Type</th>
-                  <th>Active</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((value, index) =>
-                  index <= 3 &&
-                  <tr key={index}>
-                    <td>
-                      <Link to={`/detail/${value.id}`} style={{ color: '#0062A6' }}>{value.id}</Link>
-                    </td>
-                    <td>{value.name}</td>
-                    <td>{value.symbol}</td>
-                    <td>{value.rank}</td>
-                    <td>{value.type}</td>
-                    <td>{value.is_active ? 'True' : 'False'}</td>
-                    <td>
-                      <Button style={{ backgroundColor: '#E11730' }}>Delete</Button>
-                    </td>
+    <Background>
+      <Container>
+        <TitleSmall>Coin List</TitleSmall>
+        <StyledCard>
+          <Title>Coin List</Title>
+          <Stack direction="horizontal" gap={2} style={{ margin: '38px 0px' }}>
+            <Select />
+            <Search />
+          </Stack>
+          {loading ?
+            <div>loading...</div>
+            :
+            <div>
+              <StyledTable>
+                <thead className='text-white' style={{ backgroundColor: '#3783C6' }}>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Symbol</th>
+                    <th>rank</th>
+                    <th>Type</th>
+                    <th>Active</th>
+                    <th>Action</th>
                   </tr>
-                )}
-              </tbody>
-            </StyledTable>
-            <StyledPagination className="justify-content-end" style={{ marginTop: '25px' }}>
-              <Pagination.Prev />
-              <Pagination.Item active>{1}</Pagination.Item>
-              <Pagination.Item>{2}</Pagination.Item>
-              <Pagination.Item>{3}</Pagination.Item>
-              <Pagination.Item>{4}</Pagination.Item>
-              <Pagination.Item>{5}</Pagination.Item>
-              <Pagination.Item>{6}</Pagination.Item>
-              <Pagination.Item>{7}</Pagination.Item>
-              <Pagination.Item>{8}</Pagination.Item>
-              <Pagination.Item>{9}</Pagination.Item>
-              <Pagination.Next />
-            </StyledPagination>
-          </div>
-        }
-      </StyledCard>
-    </Container>
+                </thead>
+                <tbody>
+                  {data.map((value, index) =>
+                    index <= 3 &&
+                    <tr key={index}>
+                      <td>
+                        <Link to={`/detail/${value.id}`} style={{ color: '#0062A6' }}>{value.id}</Link>
+                      </td>
+                      <td>{value.name}</td>
+                      <td>{value.symbol}</td>
+                      <td>{value.rank}</td>
+                      <td>{value.type}</td>
+                      <td>{value.is_active ? 'True' : 'False'}</td>
+                      <td>
+                        <Button style={{ backgroundColor: '#E11730' }}>Delete</Button>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </StyledTable>
+              <StyledPagination className="justify-content-end" style={{ marginTop: '25px' }}>
+                <Pagination.Prev />
+                <Pagination.Item active>{1}</Pagination.Item>
+                <Pagination.Item>{2}</Pagination.Item>
+                <Pagination.Item>{3}</Pagination.Item>
+                <Pagination.Item>{4}</Pagination.Item>
+                <Pagination.Item>{5}</Pagination.Item>
+                <Pagination.Item>{6}</Pagination.Item>
+                <Pagination.Item>{7}</Pagination.Item>
+                <Pagination.Item>{8}</Pagination.Item>
+                <Pagination.Item>{9}</Pagination.Item>
+                <Pagination.Next />
+              </StyledPagination>
+            </div>
+          }
+        </StyledCard>
+      </Container>
+    </Background>
   );
 }
 

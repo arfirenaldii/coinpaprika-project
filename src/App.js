@@ -5,12 +5,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './Home';
 import Detail from './Detail';
 
+import Navigation from './components/Navigation';
+
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="detail/:id" element={<Detail />} />
-    </Routes>
+    <div>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="detail/:id" element={<Detail />} />
+      </Routes>
+    </div>
   );
 }
 
