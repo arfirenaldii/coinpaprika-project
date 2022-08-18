@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 const Background = styled.div`
   background-color: #F3F7FB;
-  height: 100vh;
+  height: 100%;
 `
 
 const StyledTable = styled(Table)`

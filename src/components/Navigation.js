@@ -18,10 +18,6 @@ const StyledLink = styled(Link)`
   padding: 8px;
 `
 
-const StyledNav = styled(Nav)`
-  color: red;
-`
-
 function Navigation() {
   return (
     <StyledNavbar>

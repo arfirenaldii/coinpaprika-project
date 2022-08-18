@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 
 const Background = styled.div`
   background-color: #F3F7FB;
-  height: 100vh;
+  height: 100%;
 `
 
 const Wrapper = styled.div`
@@ -50,7 +50,6 @@ function Detail() {
       .then((json) => {
         setLoading(false)
         setData(json)
-        console.log(json)
       })
   }, [])
 
