@@ -39,6 +39,16 @@ const Title = styled.div`
 const StyledPagination = styled(Pagination)`
   & > li {
     margin: 0px 4px;
+    color: black;
+  }
+
+  & > li > a {
+    margin: 0px 4px;
+    color: #444F5C;
+  }
+
+  & > li > a:hover {
+    color: #444F5C;
   }
 
   & > .page-item > .page-link {
