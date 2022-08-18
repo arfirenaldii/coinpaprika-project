@@ -1,15 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import { useParams } from "react-router-dom";
 
 function Detail() {
+  let params = useParams();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Detail
-        </p>
-      </header>
+    <div>
+      <p>Detail</p>
+      <p>{params.id}</p>
     </div>
   );
 }
