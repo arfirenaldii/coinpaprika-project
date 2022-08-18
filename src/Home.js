@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import Table from 'react-bootstrap/Table';
+import Stack from 'react-bootstrap/Stack';
+import Button from 'react-bootstrap/Button';
 
 import Container from './components/Container';
+import styled from 'styled-components';
+
+const StyledTable = styled(Table)`
+  &>tbody {
+    border: transparent;
+  }
+  &>tbody>tr:nth-child(even)>td,
+  &>tbody>tr:nth-child(even)>th {
+    background-color: #F3F7FB;
+  }
+`
 
 function Select() {
   return (
@@ -22,7 +36,7 @@ function Search() {
   return (
     <form onSubmit={handleSubmit}>
       <input type="search" />
-      <button type="submit">Search</button>
+      <Button type="submit">Search</Button>
     </form>
   )
 }
@@ -44,13 +58,15 @@ function Home() {
   return (
     <Container>
       <div>Coin List</div>
-      <Select />
-      <Search />
+      <Stack direction="horizontal" gap={2} style={{ margin: '38px 0px' }}>
+        <Select />
+        <Search />
+      </Stack>
       {loading ?
         <div>loading...</div>
         :
-        <table>
-          <thead>
+        <StyledTable>
+          <thead className='text-white' style={{ backgroundColor: '#3783C6' }}>
             <tr>
               <th>ID</th>
               <th>Name</th>
@@ -63,10 +79,10 @@ function Home() {
           </thead>
           <tbody>
             {data.map((value, index) =>
-              index <= 5 &&
+              index <= 4 &&
               <tr key={index}>
                 <td>
-                  <Link to={`/detail/${value.id}`}>{value.id}</Link>
+                  <Link to={`/detail/${value.id}`} style={{ color: '#0062A6' }}>{value.id}</Link>
                 </td>
                 <td>{value.name}</td>
                 <td>{value.symbol}</td>
@@ -74,12 +90,12 @@ function Home() {
                 <td>{value.type}</td>
                 <td>{value.is_active ? 'True' : 'False'}</td>
                 <td>
-                  <button>Delete</button>
+                  <Button style={{ backgroundColor: '#E11730' }}>Delete</Button>
                 </td>
               </tr>
             )}
           </tbody>
-        </table>
+        </StyledTable>
       }
     </Container>
   );
