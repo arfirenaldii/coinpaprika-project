@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
-import Wrapper from './components/Container';
+import Container from './components/Container';
 
 function Select() {
   return (
@@ -34,14 +35,14 @@ function Home() {
     fetch('https://api.coinpaprika.com/v1/coins/')
       .then((response) => response.json())
       .then((json) => {
-        console.log(json)
         setLoading(false)
         setData(json)
+        console.log(json)
       })
   }, [])
 
   return (
-    <Wrapper>
+    <Container>
       <div>Coin List</div>
       <Select />
       <Search />
@@ -64,18 +65,23 @@ function Home() {
             {data.map((value, index) =>
               index <= 5 &&
               <tr key={index}>
-                <td>{value.id}</td>
+                <td>
+                  <Link to={`/detail/${value.id}`}>{value.id}</Link>
+                </td>
                 <td>{value.name}</td>
                 <td>{value.symbol}</td>
                 <td>{value.rank}</td>
                 <td>{value.type}</td>
-                <td>{value.is_active}</td>
+                <td>{value.is_active ? 'True' : 'False'}</td>
+                <td>
+                  <button>Delete</button>
+                </td>
               </tr>
             )}
           </tbody>
         </table>
       }
-    </Wrapper>
+    </Container>
   );
 }
 
