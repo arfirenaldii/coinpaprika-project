@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
-// import './App.css';
+
+import Wrapper from './components/Container';
 
 function Select() {
   return (
     <select>
-      {/* <option value="test">test</option> */}
+      <option value="" disabled selected>Select</option>
       <option>Satu</option>
       <option>Dua</option>
       <option>Tiga</option>
     </select>
+  )
+}
+
+function Search() {
+  const handleSubmit = (event) => {
+    event.preventDefault()
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="search" />
+      <button type="submit">Search</button>
+    </form>
   )
 }
 
@@ -27,9 +41,10 @@ function Home() {
   }, [])
 
   return (
-    <div>
+    <Wrapper>
       <div>Coin List</div>
       <Select />
+      <Search />
       {loading ?
         <div>loading...</div>
         :
@@ -47,6 +62,7 @@ function Home() {
           </thead>
           <tbody>
             {data.map((value, index) =>
+              index <= 5 &&
               <tr key={index}>
                 <td>{value.id}</td>
                 <td>{value.name}</td>
@@ -59,7 +75,7 @@ function Home() {
           </tbody>
         </table>
       }
-    </div>
+    </Wrapper>
   );
 }
 
