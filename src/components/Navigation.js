@@ -10,11 +10,14 @@ const StyledNavbar = styled(Navbar)`
   background-color: #FFFFFF;
   box-shadow: 0px 4px 19px rgba(0, 0, 0, 0.07);
   padding-top: 90px;
+  padding-bottom: 0px;
 `
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: #8597AC;
+  color: ${props => props.active ? '#1E5387' : '#8597AC'};
+  font-weight: ${props => props.active && '700'};
+  border-bottom: ${props => props.active && 'solid 4px #1E5387'};
   padding: 8px;
 `
 
@@ -24,7 +27,7 @@ function Navigation() {
       <Container>
         <Nav className="me-auto">
           <StyledLink to={`/`}>Home</StyledLink>
-          <StyledLink to={`/`}>Coin List</StyledLink>
+          <StyledLink to={`/`} active={true}>Coin List</StyledLink>
         </Nav>
       </Container>
     </StyledNavbar>

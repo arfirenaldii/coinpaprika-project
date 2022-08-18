@@ -45,6 +45,7 @@ function Detail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     fetch(`https://api.coinpaprika.com/v1/coins/${params.id}`)
       .then((response) => response.json())
       .then((json) => {

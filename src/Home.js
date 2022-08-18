@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Pagination from 'react-bootstrap/Pagination';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 
 import styled from 'styled-components';
 
@@ -67,12 +68,12 @@ const StyledPagination = styled(Pagination)`
 
 function Select() {
   return (
-    <select>
-      <option value="" disabled selected>Select</option>
-      <option>Satu</option>
-      <option>Dua</option>
-      <option>Tiga</option>
-    </select>
+    <Form.Select aria-label="Default select example" style={{ maxWidth: '215px' }}>
+      <option>Select</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </Form.Select>
   )
 }
 
@@ -82,9 +83,9 @@ function Search() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="search" placeholder="Search" />
-      <Button type="submit">Search</Button>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '12px' }}>
+      <Form.Control type="search" placeholder="Search" />
+      <Button type="submit" style={{ backgroundColor: '#2569A5' }}>Search</Button>
     </form>
   )
 }
