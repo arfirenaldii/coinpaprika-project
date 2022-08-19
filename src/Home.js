@@ -10,11 +10,6 @@ import Form from 'react-bootstrap/Form';
 
 import styled from 'styled-components';
 
-const Background = styled.div`
-  background-color: #F3F7FB;
-  height: 100%;
-`
-
 const StyledTable = styled(Table)`
   &>tbody {
     border: transparent;
@@ -175,69 +170,67 @@ function Home() {
 
 
   return (
-    <Background>
-      <Container>
-        <TitleSmall>Coin List</TitleSmall>
-        <StyledCard>
-          <Title>Coin List</Title>
-          <Stack direction="horizontal" gap={2} style={{ margin: '38px 0px' }}>
-            <Select />
-            <Search
-              search={search}
-              setSearch={setSearch}
-              handleSubmit={handleSubmit}
+    <Container>
+      <TitleSmall>Coin List</TitleSmall>
+      <StyledCard>
+        <Title>Coin List</Title>
+        <Stack direction="horizontal" gap={2} style={{ margin: '38px 0px' }}>
+          <Select />
+          <Search
+            search={search}
+            setSearch={setSearch}
+            handleSubmit={handleSubmit}
+          />
+        </Stack>
+        {loading ?
+          <div>loading...</div>
+          :
+          <div>
+            <StyledTable>
+              <thead className='text-white' style={{ backgroundColor: '#3783C6' }}>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Symbol</th>
+                  <th>rank</th>
+                  <th>Type</th>
+                  <th>Active</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              {getDataPagination() ?
+                <tbody>
+                  {getDataPagination().map((value, index) =>
+                    index <= 3 &&
+                    <tr key={index}>
+                      <td>
+                        <Link to={`/detail/${value.id}`} style={{ color: '#0062A6' }}>{value.id}</Link>
+                      </td>
+                      <td>{value.name}</td>
+                      <td>{value.symbol}</td>
+                      <td>{value.rank}</td>
+                      <td>{value.type}</td>
+                      <td>{value.is_active ? 'True' : 'False'}</td>
+                      <td>
+                        <Button style={{ backgroundColor: '#E11730' }}>Delete</Button>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+                :
+                <div />
+              }
+            </StyledTable>
+            <PaginationList
+              data={filteredData.length}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              resultPerPage={resultPerPage}
             />
-          </Stack>
-          {loading ?
-            <div>loading...</div>
-            :
-            <div>
-              <StyledTable>
-                <thead className='text-white' style={{ backgroundColor: '#3783C6' }}>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Symbol</th>
-                    <th>rank</th>
-                    <th>Type</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                {getDataPagination() ?
-                  <tbody>
-                    {getDataPagination().map((value, index) =>
-                      index <= 3 &&
-                      <tr key={index}>
-                        <td>
-                          <Link to={`/detail/${value.id}`} style={{ color: '#0062A6' }}>{value.id}</Link>
-                        </td>
-                        <td>{value.name}</td>
-                        <td>{value.symbol}</td>
-                        <td>{value.rank}</td>
-                        <td>{value.type}</td>
-                        <td>{value.is_active ? 'True' : 'False'}</td>
-                        <td>
-                          <Button style={{ backgroundColor: '#E11730' }}>Delete</Button>
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                  :
-                  <div />
-                }
-              </StyledTable>
-              <PaginationList
-                data={filteredData.length}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                resultPerPage={resultPerPage}
-              />
-            </div>
-          }
-        </StyledCard>
-      </Container>
-    </Background>
+          </div>
+        }
+      </StyledCard>
+    </Container>
   );
 }
 

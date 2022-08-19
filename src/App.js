@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 
 const Wrapper = styled.div`
   height: 800px;
+  background-color: #F3F7FB;
 `
 
 function App() {
