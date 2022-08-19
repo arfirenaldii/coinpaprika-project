@@ -111,7 +111,6 @@ function Home() {
   useEffect(() => {
     if (data.length > 0) {
       setFilteredData(data)
-      console.log(data)
     }
   }, [data])
 
@@ -137,7 +136,7 @@ function Home() {
               handleSubmit={handleSubmit}
             />
           </Stack>
-          {loading || filteredData.length === 0 ?
+          {loading ?
             <div>loading...</div>
             :
             <div>
@@ -153,24 +152,28 @@ function Home() {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {filteredData.map((value, index) =>
-                    index <= 3 &&
-                    <tr key={index}>
-                      <td>
-                        <Link to={`/detail/${value.id}`} style={{ color: '#0062A6' }}>{value.id}</Link>
-                      </td>
-                      <td>{value.name}</td>
-                      <td>{value.symbol}</td>
-                      <td>{value.rank}</td>
-                      <td>{value.type}</td>
-                      <td>{value.is_active ? 'True' : 'False'}</td>
-                      <td>
-                        <Button style={{ backgroundColor: '#E11730' }}>Delete</Button>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
+                {filteredData ?
+                  <tbody>
+                    {filteredData.map((value, index) =>
+                      index <= 3 &&
+                      <tr key={index}>
+                        <td>
+                          <Link to={`/detail/${value.id}`} style={{ color: '#0062A6' }}>{value.id}</Link>
+                        </td>
+                        <td>{value.name}</td>
+                        <td>{value.symbol}</td>
+                        <td>{value.rank}</td>
+                        <td>{value.type}</td>
+                        <td>{value.is_active ? 'True' : 'False'}</td>
+                        <td>
+                          <Button style={{ backgroundColor: '#E11730' }}>Delete</Button>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                  :
+                  <div />
+                }
               </StyledTable>
               <StyledPagination className="justify-content-end" style={{ marginTop: '25px' }}>
                 <Pagination.Prev />
