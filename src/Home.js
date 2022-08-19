@@ -77,14 +77,17 @@ function Select() {
   )
 }
 
-function Search() {
-  const handleSubmit = (event) => {
-    event.preventDefault()
-  }
+function Search(props) {
+  const { search, setSearch, handleSubmit } = props
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '12px' }}>
-      <Form.Control type="search" placeholder="Search" />
+      <Form.Control
+        type="search"
+        placeholder="Search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
       <Button type="submit" style={{ backgroundColor: '#2569A5' }}>Search</Button>
     </form>
   )
@@ -92,7 +95,9 @@ function Search() {
 
 function Home() {
   const [data, setData] = useState('')
+  const [filteredData, setFilteredData] = useState('')
   const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     fetch('https://api.coinpaprika.com/v1/coins/')
@@ -103,6 +108,21 @@ function Home() {
       })
   }, [])
 
+  useEffect(() => {
+    if (data.length > 0) {
+      setFilteredData(data)
+      console.log(data)
+    }
+  }, [data])
+
+  const handleSubmit = (event) => {
+    const searchData = data.filter(data =>
+      data.name.toLowerCase().includes(search)
+    )
+    setFilteredData(searchData)
+    event.preventDefault()
+  }
+
   return (
     <Background>
       <Container>
@@ -111,9 +131,13 @@ function Home() {
           <Title>Coin List</Title>
           <Stack direction="horizontal" gap={2} style={{ margin: '38px 0px' }}>
             <Select />
-            <Search />
+            <Search
+              search={search}
+              setSearch={setSearch}
+              handleSubmit={handleSubmit}
+            />
           </Stack>
-          {loading ?
+          {loading || filteredData.length === 0 ?
             <div>loading...</div>
             :
             <div>
@@ -130,7 +154,7 @@ function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((value, index) =>
+                  {filteredData.map((value, index) =>
                     index <= 3 &&
                     <tr key={index}>
                       <td>
