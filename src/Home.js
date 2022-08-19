@@ -93,26 +93,69 @@ function Search(props) {
   )
 }
 
+function PaginationList(props) {
+  const {
+    data,
+    currentPage,
+    setCurrentPage,
+    resultPerPage,
+  } = props
+
+  const pageNumbers = []
+  const lastPage = Math.ceil(data / resultPerPage)
+
+  for (let i = 1; i <= lastPage; i++) {
+    pageNumbers.push(i)
+  }
+
+  return (
+    <StyledPagination className="justify-content-end" style={{ marginTop: '25px' }}>
+      <Pagination.Prev
+        onClick={() => setCurrentPage(currentPage - 1)}
+        disabled={currentPage === 1}
+      />
+      {pageNumbers.map(number => (
+        <Pagination.Item
+          key={number}
+          active={number === currentPage}
+          onClick={() => setCurrentPage(number)}
+        >
+          {number}
+        </Pagination.Item>
+      ))}
+      <Pagination.Next
+        onClick={() => setCurrentPage(currentPage + 1)}
+        disabled={currentPage === lastPage}
+      />
+    </StyledPagination>
+  )
+}
+
 function Home() {
   const [data, setData] = useState('')
   const [filteredData, setFilteredData] = useState('')
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [currentPage, setCurrentPage] = useState(1);
+  const [resultPerPage] = useState(4);
 
   useEffect(() => {
     fetch('https://api.coinpaprika.com/v1/coins/')
       .then((response) => response.json())
       .then((json) => {
         setLoading(false)
-        setData(json)
+        setData(json.slice(0, 40))
       })
   }, [])
 
   useEffect(() => {
     if (data.length > 0) {
-      setFilteredData(data)
+      const last = currentPage * resultPerPage
+      const first = last - resultPerPage
+      const dataPagination = data.slice(first, last)
+      setFilteredData(dataPagination)
     }
-  }, [data])
+  }, [data, currentPage])
 
   const handleSubmit = (event) => {
     const searchData = data.filter(data =>
@@ -175,6 +218,12 @@ function Home() {
                   <div />
                 }
               </StyledTable>
+              <PaginationList
+                data={data.length}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                resultPerPage={resultPerPage}
+              />
               <StyledPagination className="justify-content-end" style={{ marginTop: '25px' }}>
                 <Pagination.Prev />
                 <Pagination.Item active>{1}</Pagination.Item>
