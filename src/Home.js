@@ -83,7 +83,7 @@ function Search(props) {
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '12px' }}>
       <Form.Control
-        type="search"
+        type="text"
         placeholder="Search"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -150,20 +150,29 @@ function Home() {
 
   useEffect(() => {
     if (data.length > 0) {
-      const last = currentPage * resultPerPage
-      const first = last - resultPerPage
-      const dataPagination = data.slice(first, last)
-      setFilteredData(dataPagination)
+      setFilteredData(data)
     }
-  }, [data, currentPage])
+  }, [data])
 
   const handleSubmit = (event) => {
-    const searchData = data.filter(data =>
-      data.name.toLowerCase().includes(search)
-    )
-    setFilteredData(searchData)
+    if (data.length > 0) {
+      const searchData = data.filter(data =>
+        data.name.toLowerCase().includes(search)
+      )
+      setCurrentPage(1)
+      setFilteredData(searchData)
+    }
     event.preventDefault()
   }
+
+  const getDataPagination = () => {
+    const last = currentPage * resultPerPage
+    const first = last - resultPerPage
+    const dataPagination = filteredData.slice(first, last)
+
+    return dataPagination
+  }
+
 
   return (
     <Background>
@@ -195,9 +204,9 @@ function Home() {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {filteredData ?
+                {getDataPagination() ?
                   <tbody>
-                    {filteredData.map((value, index) =>
+                    {getDataPagination().map((value, index) =>
                       index <= 3 &&
                       <tr key={index}>
                         <td>
@@ -219,7 +228,7 @@ function Home() {
                 }
               </StyledTable>
               <PaginationList
-                data={data.length}
+                data={filteredData.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 resultPerPage={resultPerPage}
